@@ -180,20 +180,19 @@ public class Game {
     }
     private void createGameMap() {
             gameMap.setRoom(RoomType.SHOWER_ROOM, new Exit("N", "BILLIARD_ROOM"), new Exit("E", "BALLROOM"));
-            gameMap.setRoom(RoomType.BALLROOM, new Exit("N", "HALL"), new Exit("W", "CONSERVATORY"), new Exit("E", "KITCHEN"));
+            gameMap.setRoom(RoomType.BALLROOM, new Exit("N", "HALL"), new Exit("W", "SHOWER_ROOM"), new Exit("E", "KITCHEN"));
             gameMap.setRoom(RoomType.KITCHEN, new Exit("N", "DINING_ROOM"), new Exit("W", "BILLIARD_ROOM"));
-            gameMap.setRoom(RoomType.BILLIARD_ROOM, new Exit("S", "CONSERVATORY"), new Exit("N", "LIBRARY"), new Exit("W", "DINING_ROOM"));
+            gameMap.setRoom(RoomType.BILLIARD_ROOM, new Exit("S", "SHOWER_ROOM"), new Exit("N", "LIBRARY"), new Exit("W", "BILLIARD_ROOM"));
             gameMap.setRoom(RoomType.BEDROOM, new Exit("N","LOUNGE"), new Exit("S", "KITCHEN"), new Exit("NE", "LIBRARY"), new Exit("SE", "BILLIARD_ROOM"));
-            gameMap.setRoom(RoomType.LIBRARY, new Exit("S", "BILLIARD_ROOM"), new Exit("N", "STUDY"), new Exit("W", "DINING_ROOM"));
+            gameMap.setRoom(RoomType.LIBRARY, new Exit("S", "BILLIARD_ROOM"), new Exit("N", "HALL"), new Exit("W", "DINING_ROOM"));
             gameMap.setRoom(RoomType.CELLAR, new Exit("E", "HALL"), new Exit("S", "LIBRARY"));
-            gameMap.setRoom(RoomType.HALL, new Exit("S", "BALLROOM"), new Exit("W", "STUDY"), new Exit("E", "LOUNGE"));
-            gameMap.setRoom(RoomType.LOUNGE, new Exit("S", "DINING_ROOM"), new Exit("E", "HALL"));
+            gameMap.setRoom(RoomType.HALL, new Exit("S", "BALLROOM"), new Exit("W", "LIBRARY"), new Exit("E", "LOUNGE"));
+            gameMap.setRoom(RoomType.LOUNGE, new Exit("S", "BILLIARD_ROOM"), new Exit("E", "HALL"));
 
     }
     private void printMap() {
         scanner.nextLine();
-        gameMap.printMap();
-        playerPause();
+             playerPause();
     }
     //    method(Stories.clueTemplates, WeaponList, RolePlayer);// chose how you want to implement clue making
 }

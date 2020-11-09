@@ -3,10 +3,19 @@ package com.backenders.clue;
 public class Player {
 
     private String name;
+    private RoomType playerLocation;
 
     // Constructor
-    public Player(String name) { // or Scanner?
+    public Player() { // or Scanner?
         this.name = name;
+    }
+
+    public void setCurrentRoom(RoomType hall) {
+
+    }
+
+    public RoomType getCurrentRoom() {
+        return playerLocation;
     }
 
     // Business Methods
@@ -90,6 +99,16 @@ public class Player {
     }
 
     // Getter and Setter
+
+
+    public RoomType getPlayerLocation() {
+        return playerLocation;
+    }
+
+    public void setPlayerLocation(RoomType playerLocation) {
+        this.playerLocation = playerLocation;
+    }
+
     public String getName() {
         return name;
     }

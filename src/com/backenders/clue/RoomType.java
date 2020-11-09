@@ -9,7 +9,7 @@ public enum RoomType {
     BEDROOM("King size bed, mirrors, a fluffy rug, and an alarm clock."),
     HALL("Connects to all the rooms. There is an umbrella stand by the main entry."),
     LOUNGE("Comfy chairs, people lounging and chatting"),
-    DININGROOM("A large table filled with dirty dishes and remanents of the meal. Is a butter knife missing?"),
+    DINING_ROOM("A large table filled with dirty dishes and remanents of the meal. Is a butter knife missing?"),
     CELLAR("Well stocked with aging and drink now wines, Scotts Whisky, Carribean Rum, and top shelf Tequila"),
     SHOWER_ROOM("All good murders happen in the shower. Would you like to linger for one?");
 
