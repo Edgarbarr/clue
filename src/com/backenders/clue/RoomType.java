@@ -19,8 +19,13 @@ public enum RoomType {
         this.name = name;
     }
 
+<<<<<<< Updated upstream
     public String toString() {
         return this.name;
 
     }
 }
+=======
+        }
+    }
+>>>>>>> Stashed changes
