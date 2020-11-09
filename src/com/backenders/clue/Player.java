@@ -1,12 +1,20 @@
 package com.backenders.clue;
 
 public class Player {
+<<<<<<< HEAD
 
+=======
+    private Enum currentRoom;
+>>>>>>> Solutions
     private String name;
     private RoomType playerLocation;
 
     // Constructor
+<<<<<<< HEAD
     public Player() { // or Scanner?
+=======
+    public Player(String name, Enum currentRoom) { // or Scanner?
+>>>>>>> Solutions
         this.name = name;
     }
 
@@ -23,17 +31,22 @@ public class Player {
     // Inner class
     private class Guess {
         // Fields
-        Weapon weapon;
+        Weapon weaponGuess;
         RolePlayer rolePlayerGuess;
 
         // Constructor
         public Guess(Weapon weapon, RolePlayer rolePlayer) {
+<<<<<<< HEAD
             this.weapon = weapon;
+=======
+            this.weaponGuess = weapon;
+>>>>>>> Solutions
             this.rolePlayerGuess = rolePlayer;
         }
 
         // Business Methods
 
+<<<<<<< HEAD
         Guess getGuess() {
             Enum rolePlayerGuess;
             int rpGuess =0;
@@ -66,27 +79,18 @@ public class Player {
             }
             return new Guess(Weapon.BANANA, RolePlayer.CAPTAIN_CANDACE);
         }
+=======
+>>>>>>> Solutions
 
-        private boolean isInputValid(String guess) {
-            boolean isValid = false;
-            String inputPattern = "[1-9{1}]";   //"[1-9{1}],{1}[1-9{1}]";
-            isValid = guess.matches(inputPattern);
-            if (!isValid) {
-                System.out.println("Please enter a digit comma digit with no spaces:");
-            }
-            else {
-                isValid = true;
-            }
-            return isValid;
-        }
+
 
         // Accessor Methods
         public Weapon getWeaponGuess() {
-            return weapon;
+            return weaponGuess;
         }
 
         public void setWeaponGuess(Weapon weapon) {
-            this.weapon = weapon;
+            this.weaponGuess = weapon;
         }
 
         public RolePlayer getRolePlayerGuess() {
@@ -113,22 +117,27 @@ public class Player {
         return name;
     }
 
-    // I THINK I created this thing called dependency injection with the scanner
-    // so I'm supposed to pass the scan into the instantiation of Player in main
-    // something like this? (But I don't really know?)
-    // public static void main(String[] args) {
-    //    PlayerInput scan = new PlayerInput(System.in);
-    //    Player player = new Player(scan);
-    //    Player.getName();
     public void setName(String name) {
+<<<<<<< HEAD
         //System.out.println("Your player name can be anything except blank. " +
 //                "Please enter a player name:");
         //name = PlayerInput.scan.nextLine();
+=======
+
+>>>>>>> Solutions
         if (name.isBlank()){
             System.out.println("No blanks allowed. Please enter a player name:");
         }
         else{
             this.name = name;
         }
+    }
+
+    public Enum getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(Enum currentRoom) {
+        this.currentRoom = currentRoom;
     }
 }
