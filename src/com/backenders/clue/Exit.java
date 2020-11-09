@@ -4,9 +4,9 @@ public class Exit {
     private String direction;
     private RoomType room;
 
-    public Exit(String direction, String room) {
+    public Exit(String direction, RoomType room) {
         this.direction = direction;
-        this.room = RoomType.valueOf(room);
+        this.room = room;
     }
     String getDirection() {
         return direction;

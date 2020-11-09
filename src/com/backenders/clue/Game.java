@@ -26,7 +26,7 @@ public class Game {
         actionPrompt.append("Press 5: Quit.\n");
 
         generateGame();
-        hp.setCurrentRoom(RoomType.HALL);
+        hp.setCurrentRoom(RoomType.BALLROOM);
         createGameMap();
         System.out.println("Welcome to clue");
         playerPause();
@@ -37,7 +37,7 @@ public class Game {
         Predicate<Integer> validRange = integer -> 0 <= integer && integer <= 4;
 
         while(true) {
-            System.out.println("Choose your action");
+            System.out.println("\u001B[35m"+"Choose your action");
             choice = playerChoice(validRange, actionPrompt.toString());
             switch(choice) {
                 case 0 -> askPlayerGuess();
@@ -99,6 +99,7 @@ public class Game {
         while(!validInput) {
             try {
                 System.out.println("Current location: " + hp.getCurrentRoom());
+                System.out.println(hp.getCurrentRoom().getDescription());
                 System.out.println(currentExits);
                 scanner.nextLine();
                 directionInput = scanner.nextLine().toUpperCase();
@@ -107,7 +108,7 @@ public class Game {
                 }
                 validInput = true;
             } catch (InputMismatchException e) {
-                System.out.println("Please pick a valid input");
+                System.out.println("\u001B[31m"+"Please pick a valid input");
             }
         }
         hp.setCurrentRoom(currentExits.get(directionInput.toUpperCase()));
@@ -152,7 +153,7 @@ public class Game {
                 validChoice = true;
             } catch(InputMismatchException e) {
                 scanner.nextLine();
-                System.out.println("Please chose a valid number");
+                System.out.println("\u001B[31m"+"Please chose a valid number");
             }
         }
         return choice;
@@ -179,15 +180,15 @@ public class Game {
         return new Clue();
     }
     private void createGameMap() {
-            gameMap.setRoom(RoomType.SHOWER_ROOM, new Exit("N", "BILLIARD_ROOM"), new Exit("E", "BALLROOM"));
-            gameMap.setRoom(RoomType.BALLROOM, new Exit("N", "HALL"), new Exit("W", "SHOWER_ROOM"), new Exit("E", "KITCHEN"));
-            gameMap.setRoom(RoomType.KITCHEN, new Exit("N", "DINING_ROOM"), new Exit("W", "BILLIARD_ROOM"));
-            gameMap.setRoom(RoomType.BILLIARD_ROOM, new Exit("S", "SHOWER_ROOM"), new Exit("N", "LIBRARY"), new Exit("W", "BILLIARD_ROOM"));
-            gameMap.setRoom(RoomType.BEDROOM, new Exit("N","LOUNGE"), new Exit("S", "KITCHEN"), new Exit("NE", "LIBRARY"), new Exit("SE", "BILLIARD_ROOM"));
-            gameMap.setRoom(RoomType.LIBRARY, new Exit("S", "BILLIARD_ROOM"), new Exit("N", "HALL"), new Exit("W", "DINING_ROOM"));
-            gameMap.setRoom(RoomType.CELLAR, new Exit("E", "HALL"), new Exit("S", "LIBRARY"));
-            gameMap.setRoom(RoomType.HALL, new Exit("S", "BALLROOM"), new Exit("W", "LIBRARY"), new Exit("E", "LOUNGE"));
-            gameMap.setRoom(RoomType.LOUNGE, new Exit("S", "BILLIARD_ROOM"), new Exit("E", "HALL"));
+            gameMap.setRoom(RoomType.KITCHEN, new Exit("N", RoomType.LIBRARY), new Exit("E", RoomType.BALLROOM));
+            gameMap.setRoom(RoomType.BALLROOM, new Exit("N", RoomType.DINING_ROOM), new Exit("W", RoomType.KITCHEN), new Exit("E", RoomType.BILLIARD_ROOM));
+            gameMap.setRoom(RoomType.BILLIARD_ROOM, new Exit("N", RoomType.BEDROOM), new Exit("W", RoomType.BALLROOM));
+            gameMap.setRoom(RoomType.LIBRARY, new Exit("S", RoomType.KITCHEN), new Exit("N", RoomType.LOUNGE), new Exit("SE", RoomType.BEDROOM), new Exit("NE", RoomType.HALL));
+            gameMap.setRoom(RoomType.BEDROOM, new Exit("N",RoomType.HALL), new Exit("S", RoomType.BILLIARD_ROOM), new Exit("W", RoomType.LIBRARY));
+            gameMap.setRoom(RoomType.HALL, new Exit("S", RoomType.BEDROOM), new Exit("N", RoomType.CELLAR), new Exit("W", RoomType.LIBRARY));
+            gameMap.setRoom(RoomType.LOUNGE, new Exit("E", RoomType.DINING_ROOM), new Exit("S", RoomType.LIBRARY));
+            gameMap.setRoom(RoomType.DINING_ROOM, new Exit("S", RoomType.BALLROOM), new Exit("W", RoomType.LOUNGE), new Exit("E", RoomType.CELLAR));
+            gameMap.setRoom(RoomType.CELLAR, new Exit("S", RoomType.HALL), new Exit("W", RoomType.DINING_ROOM));
 
     }
     private void printMap() {
