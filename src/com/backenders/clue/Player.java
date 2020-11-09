@@ -10,7 +10,7 @@ public class Player {
         this.name = name;
     }
 
-    public void setCurrentRoom(RoomType hall) {
+    public void setCurrentRoom(RoomType playerLocation) {
 
     }
 
