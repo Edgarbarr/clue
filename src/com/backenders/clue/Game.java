@@ -1,6 +1,8 @@
 package com.backenders.clue;
 
-import java.util.List;
+import javax.naming.spi.ObjectFactoryBuilder;
+import java.util.*;
+import java.util.function.Predicate;
 
 public class Game {
     private RolePlayer rolePlayers;
@@ -8,26 +10,191 @@ public class Game {
     private List<Room> rooms; //can be enum or class
     private Clue clue; //should we have a clue class or have clues in Game
     private Solution solution;
-    private Player hp;
+    private Player hp = new Player();
     private Stories stories;
+    private GameMap gameMap = new GameMap();
+    private Scanner scanner = new Scanner(System.in);
+
 //    private Thread bRoleThread;
 
     public void start(){
-        System.out.println("start");
+        StringBuilder actionPrompt = new StringBuilder();
+        actionPrompt.append("Press 0: Take a guess.\n");
+        actionPrompt.append("Press 1: Move to a different room.\n");
+        actionPrompt.append("Press 2: Look for clues.\n");
+        actionPrompt.append("Press 3: Check your journal.\n");
+        actionPrompt.append("Press 4: Check map\n");
+        actionPrompt.append("Press 5: Quit.\n");
+
+        generateGame();
+        hp.setCurrentRoom(Room.HALL);
+        createGameMap();
+        System.out.println("Welcome to clue");
+        playerPause();
+        System.out.println("A crazy mystery game its pretty cool");
+        playerPause();
+
+        int choice;
+        Predicate<Integer> validRange = integer -> 0 <= integer && integer <= 4;
+
+        while(true) {
+            System.out.println("Choose your action");
+            choice = playerChoice(validRange, actionPrompt.toString());
+            switch(choice) {
+                case 0 -> askPlayerGuess();
+                case 1 -> offerMoveToPlayer(hp.getCurrentRoom());
+                case 2 -> checkForClues();
+                case 3 -> checkJournal();
+                case 4 -> printMap();
+                case 5 -> quit();
+                default -> System.out.println("thats not something you can do");
+            }
+        }
     }
     public void displayRules() {
 
     }
-    public void generateGame() {
-        Room room = new Room();
-        rooms = Room.generateRooms();
+    private void generateGame() {
+//        Room room = new Room();
+//        rooms = Room.generateRooms();
     }
-    askPlayerGuess(){};
-    checkSolutions(){};
-    offerMoveToPlayer();
-    listRolePlayers(){};
-    listRooms(){};
-    listWeapons(){};
+    private Guess askPlayerGuess(){
 
-//    method(Stories.clueTemplates, WeaponList, RolePlayer);// chose how you want to implement clue making
+        Predicate<Integer> validRange = integer -> 0 <= integer && integer <= Weapon.values().length;
+
+        System.out.println("Whats your guess?");
+
+        StringBuilder askPlayerForMurderer = new StringBuilder();
+        askPlayerForMurderer.append("Choose the murderer.\n");
+
+        StringBuilder askPlayerForWeapon = new StringBuilder();
+        askPlayerForWeapon.append("Choose the murder weapon.\n");
+
+        for(RolePlayer rp : RolePlayer.values()) {
+            askPlayerForMurderer.append("Press " + rp.ordinal() + ": "+ rp.toString()+ " \n");
+        }
+        for(Weapon wp : Weapon.values()) {
+            askPlayerForWeapon.append("Press " + wp.ordinal() + ": to pick "+ wp.toString() + "\n");
+        }
+
+        int murdererGuess = playerChoice(validRange, askPlayerForMurderer.toString());
+
+        int weaponGuess = playerChoice(validRange, askPlayerForWeapon.toString());
+
+        System.out.println("You guess that "+ RolePlayer.values()[murdererGuess] + " did it with a " +Weapon.values()[weaponGuess]);
+        return new Guess();
+//        return new Guess(RolePlayer.values()[murdererGuess], Weapon.values()[weaponGuess]);
+
+    };
+
+    private boolean checkSolutions(Guess playerGuess){
+//        return Solution.checkSolution(playerGuess);
+        return false;
+    };
+
+    private void offerMoveToPlayer(Room playerRoom) {
+        System.out.println("Where would you like to go");
+        Map<String, Room> currentExits = gameMap.getExits(playerRoom);
+        String directionInput = "";
+        boolean validInput = false;
+        while(!validInput) {
+            try {
+                System.out.println("Current location: " + hp.getCurrentRoom());
+                System.out.println(currentExits);
+                scanner.nextLine();
+                directionInput = scanner.nextLine().toUpperCase();
+                if(!currentExits.keySet().contains(directionInput)) {
+                    throw new InputMismatchException();
+                }
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Please pick a valid input");
+            }
+        }
+        hp.setCurrentRoom(currentExits.get(directionInput.toUpperCase()));
+        System.out.println(hp.getCurrentRoom());
+
+    };
+
+    private <T extends Enum<T>> void printList(Class<T> enumType) {
+        for(T enumConstant : enumType.getEnumConstants()) {
+            System.out.println(enumConstant.name());
+        }
+        System.out.println();
+    };
+    private void listRolePlayers(){
+        printList(RolePlayer.class);
+    };
+    private void listRooms(){
+        printList(Room.class);
+    };
+    private void listWeapons(){
+        printList(Weapon.class);
+    };
+    private void quit() {
+        System.out.println("Thanks for playing have a nice day");
+        System.exit(0);
+    }
+    private void playerPause() {
+        System.out.println("Press enter to continue");
+        scanner.nextLine();
+    }
+    private int playerChoice(Predicate validRange, String choicePrompt) {
+        int choice = 0;
+        boolean validChoice = false;
+
+        while(!validChoice) {
+            System.out.println(choicePrompt);
+            try {
+                choice = scanner.nextInt();
+                if(!validRange.test(choice)) {
+                    throw new InputMismatchException();
+                }
+                validChoice = true;
+            } catch(InputMismatchException e) {
+                scanner.nextLine();
+                System.out.println("Please chose a valid number");
+            }
+        }
+        return choice;
+    }
+
+    private void checkJournal() {
+        StringBuilder listOptions = new StringBuilder();
+        listOptions.append("what would you like to list?\n");
+        listOptions.append("Press 0: Weapons\n");
+        listOptions.append("Press 1: RolePlayers\n");
+        listOptions.append("Press 2: Rooms\n");
+        Predicate<Integer> journalRange = integer -> 0 <= integer || integer >= 2;
+        int choice = playerChoice(journalRange, listOptions.toString());
+
+        switch(choice) {
+            case 0 -> listWeapons();
+            case 1 -> listRolePlayers();
+            case 2 -> listRooms();
+        }
+    }
+
+    public Clue checkForClues() {
+        System.out.println("You found a clue");
+        return new Clue();
+    }
+    private void createGameMap() {
+            gameMap.setRoom(Room.CONSERVATORY, new Exit("N", "BILLIARD_ROOM"), new Exit("E", "BALLROOM"));
+            gameMap.setRoom(Room.BALLROOM, new Exit("N", "HALL"), new Exit("W", "CONSERVATORY"), new Exit("E", "KITCHEN"));
+            gameMap.setRoom(Room.KITCHEN, new Exit("N", "DINING_ROOM"), new Exit("W", "BILLIARD_ROOM"));
+            gameMap.setRoom(Room.BILLIARD_ROOM, new Exit("S", "CONSERVATORY"), new Exit("N", "LIBRARY"), new Exit("W", "DINING_ROOM"));
+            gameMap.setRoom(Room.DINING_ROOM, new Exit("N","LOUNGE"), new Exit("S", "KITCHEN"), new Exit("NE", "LIBRARY"), new Exit("SE", "BILLIARD_ROOM"));
+            gameMap.setRoom(Room.LIBRARY, new Exit("S", "BILLIARD_ROOM"), new Exit("N", "STUDY"), new Exit("W", "DINING_ROOM"));
+            gameMap.setRoom(Room.STUDY, new Exit("E", "HALL"), new Exit("S", "LIBRARY"));
+            gameMap.setRoom(Room.HALL, new Exit("S", "BALLROOM"), new Exit("W", "STUDY"), new Exit("E", "LOUNGE"));
+            gameMap.setRoom(Room.LOUNGE, new Exit("S", "DINING_ROOM"), new Exit("E", "HALL"));
+
+    }
+    private void printMap() {
+        scanner.nextLine();
+        gameMap.printMap();
+        playerPause();
+    }
+    //    method(Stories.clueTemplates, WeaponList, RolePlayer);// chose how you want to implement clue making
 }
