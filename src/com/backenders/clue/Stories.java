@@ -1,12 +1,36 @@
 package com.backenders.clue;
 
-public class Stories {
-    String welcome = "";
-    // More strings for storyline
-    String weaponTemplate = "You see a %s in this room.";
-    String rolePlayerTemplate = "%s smiles and says good evening.";
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
-    private class BRoll {
-        String bRoll;
+public class Stories {
+
+
+
+    public static void main(String[] args) {
+        welcomeMessage();
+    }
+
+    public static void welcomeMessage () {
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("welcome.txt"))) {
+            List<String> lines = new ArrayList<>();
+
+            String curLine = null;
+            while ((curLine = reader.readLine()) != null) {
+                lines.add(curLine);
+            }
+            for (String line : lines) {
+                System.out.println(line);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
