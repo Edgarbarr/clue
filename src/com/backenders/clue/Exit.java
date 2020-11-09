@@ -2,16 +2,16 @@ package com.backenders.clue;
 
 public class Exit {
     private String direction;
-    private Room room;
+    private RoomType room;
 
     public Exit(String direction, String room) {
         this.direction = direction;
-        this.room = Room.valueOf(room);
+        this.room = RoomType.valueOf(room);
     }
     String getDirection() {
         return direction;
     }
-    Room getRoom() {
+    RoomType getRoom() {
         return room;
     }
 }

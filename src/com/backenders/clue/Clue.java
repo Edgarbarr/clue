@@ -8,14 +8,14 @@ public class Clue {
 
 
 
-    void generateClues(Weapon, RolePlayer rp) {
-        generateWeaponClues(Weapons);
-        generateRolePlayerClues(RolePlayer);
-    }
-    void generateWeaponClues(Weapons) {
-
-    }
-    void generateRolePlayerClues(RolePlayer) {
-
-    }
+//    void generateClues(Weapon, RolePlayer rp) {
+//        generateWeaponClues(Weapons);
+//        generateRolePlayerClues(RolePlayer);
+//    }
+//    void generateWeaponClues(Weapons) {
+//
+//    }
+//    void generateRolePlayerClues(RolePlayer) {
+//
+//    }
 }

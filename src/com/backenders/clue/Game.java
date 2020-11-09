@@ -1,13 +1,12 @@
 package com.backenders.clue;
 
-import javax.naming.spi.ObjectFactoryBuilder;
 import java.util.*;
 import java.util.function.Predicate;
 
 public class Game {
     private RolePlayer rolePlayers;
     private Weapon weapons;
-    private List<Room> rooms; //can be enum or class
+    private List<RoomType> rooms; //can be enum or class
     private Clue clue; //should we have a clue class or have clues in Game
     private Solution solution;
     private Player hp = new Player();
@@ -27,7 +26,7 @@ public class Game {
         actionPrompt.append("Press 5: Quit.\n");
 
         generateGame();
-        hp.setCurrentRoom(Room.HALL);
+        hp.setCurrentRoom(RoomType.HALL);
         createGameMap();
         System.out.println("Welcome to clue");
         playerPause();
@@ -92,9 +91,9 @@ public class Game {
         return false;
     };
 
-    private void offerMoveToPlayer(Room playerRoom) {
+    private void offerMoveToPlayer(RoomType playerRoom) {
         System.out.println("Where would you like to go");
-        Map<String, Room> currentExits = gameMap.getExits(playerRoom);
+        Map<String, RoomType> currentExits = gameMap.getExits(playerRoom);
         String directionInput = "";
         boolean validInput = false;
         while(!validInput) {
@@ -126,7 +125,7 @@ public class Game {
         printList(RolePlayer.class);
     };
     private void listRooms(){
-        printList(Room.class);
+        printList(RoomType.class);
     };
     private void listWeapons(){
         printList(Weapon.class);
@@ -180,15 +179,15 @@ public class Game {
         return new Clue();
     }
     private void createGameMap() {
-            gameMap.setRoom(Room.CONSERVATORY, new Exit("N", "BILLIARD_ROOM"), new Exit("E", "BALLROOM"));
-            gameMap.setRoom(Room.BALLROOM, new Exit("N", "HALL"), new Exit("W", "CONSERVATORY"), new Exit("E", "KITCHEN"));
-            gameMap.setRoom(Room.KITCHEN, new Exit("N", "DINING_ROOM"), new Exit("W", "BILLIARD_ROOM"));
-            gameMap.setRoom(Room.BILLIARD_ROOM, new Exit("S", "CONSERVATORY"), new Exit("N", "LIBRARY"), new Exit("W", "DINING_ROOM"));
-            gameMap.setRoom(Room.DINING_ROOM, new Exit("N","LOUNGE"), new Exit("S", "KITCHEN"), new Exit("NE", "LIBRARY"), new Exit("SE", "BILLIARD_ROOM"));
-            gameMap.setRoom(Room.LIBRARY, new Exit("S", "BILLIARD_ROOM"), new Exit("N", "STUDY"), new Exit("W", "DINING_ROOM"));
-            gameMap.setRoom(Room.STUDY, new Exit("E", "HALL"), new Exit("S", "LIBRARY"));
-            gameMap.setRoom(Room.HALL, new Exit("S", "BALLROOM"), new Exit("W", "STUDY"), new Exit("E", "LOUNGE"));
-            gameMap.setRoom(Room.LOUNGE, new Exit("S", "DINING_ROOM"), new Exit("E", "HALL"));
+            gameMap.setRoom(RoomType.SHOWER_ROOM, new Exit("N", "BILLIARD_ROOM"), new Exit("E", "BALLROOM"));
+            gameMap.setRoom(RoomType.BALLROOM, new Exit("N", "HALL"), new Exit("W", "CONSERVATORY"), new Exit("E", "KITCHEN"));
+            gameMap.setRoom(RoomType.KITCHEN, new Exit("N", "DINING_ROOM"), new Exit("W", "BILLIARD_ROOM"));
+            gameMap.setRoom(RoomType.BILLIARD_ROOM, new Exit("S", "CONSERVATORY"), new Exit("N", "LIBRARY"), new Exit("W", "DINING_ROOM"));
+            gameMap.setRoom(RoomType.BEDROOM, new Exit("N","LOUNGE"), new Exit("S", "KITCHEN"), new Exit("NE", "LIBRARY"), new Exit("SE", "BILLIARD_ROOM"));
+            gameMap.setRoom(RoomType.LIBRARY, new Exit("S", "BILLIARD_ROOM"), new Exit("N", "STUDY"), new Exit("W", "DINING_ROOM"));
+            gameMap.setRoom(RoomType.CELLAR, new Exit("E", "HALL"), new Exit("S", "LIBRARY"));
+            gameMap.setRoom(RoomType.HALL, new Exit("S", "BALLROOM"), new Exit("W", "STUDY"), new Exit("E", "LOUNGE"));
+            gameMap.setRoom(RoomType.LOUNGE, new Exit("S", "DINING_ROOM"), new Exit("E", "HALL"));
 
     }
     private void printMap() {

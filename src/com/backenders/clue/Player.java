@@ -1,11 +1,11 @@
 package com.backenders.clue;
 
 public class Player {
-    Player hp = new Player;
+
     private String name;
 
     // Constructor
-    public Player(String name, PlayerInput scan) { // or Scanner?
+    public Player(String name) { // or Scanner?
         this.name = name;
     }
 
@@ -20,19 +20,20 @@ public class Player {
         // Constructor
         public Guess(Weapon weapon, RolePlayer rolePlayer) {
             this.weapon = weapon;
-            this.rolePlayer = rolePlayer;
+            this.rolePlayerGuess = rolePlayer;
         }
 
         // Business Methods
 
-        Enum<RolePlayer> getGuess() {
+        Guess getGuess() {
             Enum rolePlayerGuess;
-            int rpGuess;
+            int rpGuess =0;
 
             System.out.println("Are you ready to guess? Enter the corresponding digit of the suspected murderer"
                     + "(No spaces, please. Only a digit.)");
-            rpGuess = PlayerInput.scan.nextInt();
-            if ( 0 < rolePlayerGuess && rpGuess < 10){
+//            rpGuess = PlayerInput.scan.nextInt();
+//            0 < rolePlayerGuess && rpGuess < 10
+            if (true){
                 switch (rpGuess) {
                     case 1: setRolePlayerGuess(RolePlayer.GURU_JAY);
                             break;
@@ -54,7 +55,7 @@ public class Player {
                             break;
                 }
             }
-            return rolePlayerGuess;
+            return new Guess(Weapon.BANANA, RolePlayer.CAPTAIN_CANDACE);
         }
 
         private boolean isInputValid(String guess) {
@@ -102,7 +103,7 @@ public class Player {
     //    Player.getName();
     public void setName(String name) {
         //System.out.println("Your player name can be anything except blank. " +
-                "Please enter a player name:");
+//                "Please enter a player name:");
         //name = PlayerInput.scan.nextLine();
         if (name.isBlank()){
             System.out.println("No blanks allowed. Please enter a player name:");
