@@ -4,8 +4,11 @@ public class Solution {
     private RolePlayer murderer;
     private Weapon murderWeapon;
 
-   int checkSolution(Guess guess) {
-        return 0;
+
+
+   boolean checkSolution(Weapon weapon, RolePlayer rolePlayer) {
+       boolean result = false;
+       return result;
    }
 
 }
