@@ -99,7 +99,7 @@ public class Game {
         while(!validInput) {
             try {
                 System.out.println("Current location: " + hp.getCurrentRoom());
-                System.out.println(hp.getCurrentRoom().getDescription());
+                System.out.println(hp.getCurrentRoom());
                 System.out.println(currentExits);
                 scanner.nextLine();
                 directionInput = scanner.nextLine().toUpperCase();

@@ -1,11 +1,11 @@
 package com.backenders.clue;
 
 public class Player {
-    private Enum currentRoom;
+    private RoomType currentRoom;
     private String name;
 
     // Constructor
-    public Player(String name, Enum currentRoom) { // or Scanner?
+    public Player() { // or Scanner?
         this.name = name;
     }
 
@@ -57,15 +57,15 @@ public class Player {
             System.out.println("No blanks allowed. Please enter a player name:");
         }
         else{
-            this.name = name;
+
         }
     }
 
-    public Enum getCurrentRoom() {
+    public RoomType getCurrentRoom() {
         return currentRoom;
     }
 
-    public void setCurrentRoom(Enum currentRoom) {
+    public void setCurrentRoom(RoomType currentRoom) {
         this.currentRoom = currentRoom;
     }
 }

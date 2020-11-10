@@ -19,18 +19,17 @@ public enum RoomType {
         this.name = name;
     }
 
-<<<<<<< HEAD
-<<<<<<< Updated upstream
+
     public String toString() {
         return this.name;
 
-=======
+
+
+    }
     String getDescription() {
         return "\u001B[36m" + name + "\u001B[32m";
->>>>>>> GameMapAndGame
+
     }
+
 }
-=======
-        }
-    }
->>>>>>> Stashed changes
+
